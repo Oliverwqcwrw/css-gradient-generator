@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Gradient Generator — Free AI-Powered Tool</title>
+<meta name="description" content="Generate beautiful CSS gradients with AI assistance. Preview, copy CSS code, and get creative gradient suggestions instantly. Free, no signup required.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CSS Gradient Generator",
+  "description": "Generate beautiful CSS gradients with AI assistance. Preview, copy CSS code, and get creative gradient suggestions instantly.",
+  "url": "https://oliverwqcwrw.github.io/css-gradient-generator/",
+  "applicationCategory": "DesignApplication",
+  "operatingSystem": "Web",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+}
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;min-height:100vh}
+header{padding:2rem;text-align:center;border-bottom:1px solid #21262d}
+header h1{font-size:2rem;font-weight:700;color:#f0f6fc;margin-bottom:.5rem}
+header p{color:#8b949e;font-size:1rem}
+.main{max-width:1100px;margin:0 auto;padding:2rem 1rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:700px){.main{grid-template-columns:1fr}}
+.panel{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:1.5rem}
+.panel h2{color:#f0f6fc;font-size:1.1rem;margin-bottom:1rem;font-weight:600}
+label{display:block;margin-bottom:.3rem;font-size:.85rem;color:#8b949e}
+input[type=color]{width:100%;height:40px;border:1px solid #30363d;border-radius:6px;background:#0d1117;cursor:pointer;padding:2px}
+input[type=range]{width:100%;accent-color:#58a6ff;margin:6px 0}
+select,input[type=text]{width:100%;padding:.5rem .75rem;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#c9d1d9;font-size:.9rem;outline:none}
+select:focus,input:focus{border-color:#58a6ff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.field{margin-bottom:1rem}
+.preview{width:100%;height:180px;border-radius:10px;border:1px solid #30363d;margin-bottom:1rem;transition:all .3s}
+.code-box{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:1rem;font-family:monospace;font-size:.85rem;color:#79c0ff;word-break:break-all;position:relative;margin-bottom:1rem;min-height:60px}
+.copy-btn{position:absolute;top:.5rem;right:.5rem;background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:.25rem .6rem;border-radius:5px;cursor:pointer;font-size:.75rem}
+.copy-btn:hover{background:#30363d}
+.btn{width:100%;padding:.7rem;background:#238636;border:none;color:#fff;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:600;transition:background .2s}
+.btn:hover{background:#2ea043}
+.btn-secondary{background:#21262d;border:1px solid #30363d;margin-top:.5rem}
+.btn-secondary:hover{background:#30363d}
+.ai-section{grid-column:1/-1}
+.ai-config{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:700px){.ai-config{grid-template-columns:1fr}}
+textarea{width:100%;padding:.75rem;background:#0d1117;border:1px solid #30363d;border-radius:8px;color:#c9d1d9;font-size:.9rem;resize:vertical;outline:none;min-height:80px}
+textarea:focus{border-color:#58a6ff}
+.suggestions{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-top:1rem}
+.sug-card{border-radius:8px;height:80px;cursor:pointer;border:2px solid transparent;transition:border .2s;position:relative;overflow:hidden}
+.sug-card:hover{border-color:#58a6ff}
+.sug-label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:.7rem;padding:.25rem .5rem;text-align:center}
+.status{padding:.5rem .75rem;border-radius:6px;font-size:.85rem;margin-top:.5rem}
+.status.ok{background:#1a3626;color:#3fb950;border:1px solid #238636}
+.status.err{background:#3d1a1a;color:#f85149;border:1px solid #da3633}
+.tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+.tab{padding:.4rem .9rem;border-radius:20px;cursor:pointer;font-size:.85rem;border:1px solid #30363d;color:#8b949e;background:transparent}
+.tab.active{background:#1f6feb;border-color:#1f6feb;color:#fff}
+.color-stops{display:flex;flex-direction:column;gap:.5rem}
+.stop-row{display:flex;align-items:center;gap:.5rem}
+.stop-row input[type=color]{width:50px;height:36px;flex-shrink:0}
+.stop-row input[type=range]{flex:1}
+.stop-row input[type=text]{width:70px}
+.stop-row button{background:#da3633;border:none;color:#fff;border-radius:4px;width:28px;height:28px;cursor:pointer;font-size:1rem;flex-shrink:0}
+.add-stop{background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-size:.85rem;margin-top:.5rem}
+.add-stop:hover{background:#30363d}
+.donation{max-width:600px;margin:2rem auto;text-align:center;padding:2rem 1rem}
+.donation h3{color:#f0f6fc;margin-bottom:.5rem;font-size:1.1rem}
+.donation p{color:#8b949e;font-size:.9rem;margin-bottom:1.5rem}
+.qr-row{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
+.qr-item{text-align:center}
+.qr-item img{border-radius:8px;border:1px solid #30363d;background:#fff;padding:4px}
+.qr-item .addr{font-size:.65rem;color:#8b949e;word-break:break-all;max-width:140px;margin-top:.5rem}
+.qr-item .coin{font-weight:700;color:#f0f6fc;font-size:.85rem;margin-bottom:.4rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎨 CSS Gradient Generator</h1>
+  <p>Build stunning gradients visually — then let AI suggest beautiful palettes</p>
+</header>
+
+<div class="main">
+  <!-- Left: Controls -->
+  <div class="panel">
+    <h2>Gradient Controls</h2>
+    <div class="tabs">
+      <div class="tab active" onclick="setType('linear')">Linear</div>
+      <div class="tab" onclick="setType('radial')">Radial</div>
+      <div class="tab" onclick="setType('conic')">Conic</div>
+    </div>
+
+    <div id="angleField" class="field">
+      <label>Angle: <span id="angleVal">135°</span></label>
+      <input type="range" id="angle" min="0" max="360" value="135" oninput="document.getElementById('angleVal').textContent=this.value+'°';updateGradient()">
+    </div>
+
+    <div class="field">
+      <label>Color Stops</label>
+      <div class="color-stops" id="colorStops"></div>
+      <button class="add-stop" onclick="addStop()">+ Add Color Stop</button>
+    </div>
+
+    <div style="margin-top:1rem">
+      <button class="btn btn-secondary" onclick="randomGradient()">🎲 Random Gradient</button>
+    </div>
+  </div>
+
+  <!-- Right: Preview + Code -->
+  <div class="panel">
+    <h2>Preview & Code</h2>
+    <div class="preview" id="preview"></div>
+    <div class="code-box" id="codeBox">
+      <button class="copy-btn" onclick="copyCode()">Copy</button>
+      <span id="codeText"></span>
+    </div>
+    <div class="field">
+      <label>Element Size</label>
+      <select onchange="document.getElementById('preview').style.height=this.value">
+        <option value="180px">Small (180px)</option>
+        <option value="260px" selected>Medium (260px)</option>
+        <option value="360px">Large (360px)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>CSS Property</label>
+      <select id="cssProp" onchange="updateGradient()">
+        <option value="background">background</option>
+        <option value="background-image">background-image</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- AI Section -->
+  <div class="panel ai-section">
+    <h2>🤖 AI Gradient Suggestions</h2>
+    <div class="ai-config">
+      <div class="field">
+        <label>AI Provider</label>
+        <select id="provider" onchange="loadKey()">
+          <option value="groq">Groq (Free)</option>
+          <option value="openrouter">OpenRouter (Free)</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="openai">OpenAI</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>API Key</label>
+        <input type="text" id="apiKey" placeholder="Enter your API key..." oninput="saveKey()">
+      </div>
+    </div>
+    <div class="field">
+      <label>Describe the mood / style / use case</label>
+      <textarea id="aiPrompt" placeholder="e.g. Sunset vibes for a travel app hero section, warm and inviting"></textarea>
+    </div>
+    <button class="btn" onclick="getAISuggestions()">✨ Generate AI Suggestions</button>
+    <div id="aiStatus"></div>
+    <div class="suggestions" id="suggestions"></div>
+  </div>
+</div>
+
+<div class="donation">
+  <h3>☕ Support This Tool</h3>
+  <p>If this saved you time, consider a small tip — it helps keep the tool free and maintained.</p>
+  <div class="qr-row">
+    <div class="qr-item">
+      <div class="coin">USDT (TRC-20)</div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=TSvC67jexputnNHayVR8fpScwFmwvZV8jp" alt="USDT QR">
+      <div class="addr">TSvC67jexputnNHayVR8fpScwFmwvZV8jp</div>
+    </div>
+    <div class="qr-item">
+      <div class="coin">ETH (ERC-20)</div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=0x11e764fac3fcd4be16da43a252a62b156e06a632" alt="ETH QR">
+      <div class="addr">0x11e764fac3fcd4be16da43a252a62b156e06a632</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let gradType='linear', stops=[], angle=135;
+
+const PROVIDERS={
+  groq:{url:'https://api.groq.com/openai/v1/chat/completions',model:'llama-3.3-70b-versatile'},
+  openrouter:{url:'https://openrouter.ai/api/v1/chat/completions',model:'meta-llama/llama-3.3-70b-instruct:free'},
+  deepseek:{url:'https://api.deepseek.com/v1/chat/completions',model:'deepseek-chat'},
+  openai:{url:'https://api.openai.com/v1/chat/completions',model:'gpt-4o-mini'}
+};
+
+function saveKey(){localStorage.setItem('gk_'+document.getElementById('provider').value, document.getElementById('apiKey').value)}
+function loadKey(){document.getElementById('apiKey').value=localStorage.getItem('gk_'+document.getElementById('provider').value)||''}
+
+function setType(t){
+  gradType=t;
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',['linear','radial','conic'][i]===t));
+  document.getElementById('angleField').style.display=(t==='linear')?'block':'none';
+  updateGradient();
+}
+
+function addStop(color=null, pos=null){
+  const id=Date.now();
+  const defaultColors=['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#ffeaa7','#dda0dd','#98d8c8'];
+  const c=color||defaultColors[stops.length%defaultColors.length];
+  const p=pos!==null?pos:stops.length===0?0:stops.length===1?100:Math.round(100/(stops.length));
+  stops.push({id,color:c,pos:p});
+  renderStops();
+  updateGradient();
+}
+
+function removeStop(id){
+  if(stops.length<=2)return;
+  stops=stops.filter(s=>s.id!==id);
+  renderStops();
+  updateGradient();
+}
+
+function renderStops(){
+  const container=document.getElementById('colorStops');
+  container.innerHTML='';
+  stops.forEach(s=>{
+    const row=document.createElement('div');
+    row.className='stop-row';
+    row.innerHTML=`
+      <input type="color" value="${s.color}" onchange="stops.find(x=>x.id==${s.id}).color=this.value;updateGradient()">
+      <input type="range" min="0" max="100" value="${s.pos}" oninput="stops.find(x=>x.id==${s.id}).pos=parseInt(this.value);this.nextElementSibling.value=this.value+'%';updateGradient()">
+      <input type="text" value="${s.pos}%" style="width:52px" onchange="let v=parseInt(this.value);stops.find(x=>x.id==${s.id}).pos=v;updateGradient()">
+      <button onclick="removeStop(${s.id})">×</button>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function buildGradientValue(){
+  const sorted=[...stops].sort((a,b)=>a.pos-b.pos);
+  const stopsStr=sorted.map(s=>`${s.color} ${s.pos}%`).join(', ');
+  if(gradType==='linear') return `linear-gradient(${angle}deg, ${stopsStr})`;
+  if(gradType==='radial') return `radial-gradient(circle, ${stopsStr})`;
+  return `conic-gradient(from ${angle}deg, ${stopsStr})`;
+}
+
+function updateGradient(){
+  angle=parseInt(document.getElementById('angle').value)||135;
+  const val=buildGradientValue();
+  const prop=document.getElementById('cssProp').value;
+  document.getElementById('preview').style.background=val;
+  const css=`${prop}: ${val};`;
+  document.getElementById('codeText').textContent=css;
+}
+
+function copyCode(){
+  navigator.clipboard.writeText(document.getElementById('codeText').textContent);
+  const btn=document.querySelector('.copy-btn');
+  btn.textContent='Copied!';
+  setTimeout(()=>btn.textContent='Copy',2000);
+}
+
+function randomGradient(){
+  stops=[];
+  const n=2+Math.floor(Math.random()*3);
+  const rand=()=>'#'+Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+  for(let i=0;i<n;i++) addStop(rand(), Math.round(i*(100/(n-1))));
+  document.getElementById('angle').value=Math.floor(Math.random()*360);
+  document.getElementById('angleVal').textContent=document.getElementById('angle').value+'°';
+  updateGradient();
+}
+
+async function getAISuggestions(){
+  const key=document.getElementById('apiKey').value.trim();
+  if(!key){setStatus('Please enter an API key','err');return;}
+  const prompt=document.getElementById('aiPrompt').value.trim()||'beautiful modern gradient';
+  const prov=document.getElementById('provider').value;
+  const cfg=PROVIDERS[prov];
+  setStatus('Generating suggestions...','');
+  
+  const sysMsg=`You are a CSS gradient design expert. Given a description, output exactly 6 gradient suggestions as JSON array. Each item: {"name":"Short Name","gradient":"full CSS gradient value (only the value, not property name)"}. Return ONLY the JSON array, no markdown.`;
+  
+  try{
+    const resp=await fetch(cfg.url,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key,...(prov==='openrouter'?{'HTTP-Referer':'https://oliverwqcwrw.github.io/css-gradient-generator/'}:{})},
+      body:JSON.stringify({model:cfg.model,messages:[{role:'system',content:sysMsg},{role:'user',content:'Suggest 6 beautiful CSS gradients for: '+prompt}],temperature:1,max_tokens:1000})
+    });
+    const data=await resp.json();
+    if(!resp.ok)throw new Error(data.error?.message||resp.statusText);
+    let text=data.choices[0].message.content.trim();
+    if(text.startsWith('```'))text=text.replace(/```json?
+?/g,'').replace(/```/g,'').trim();
+    const items=JSON.parse(text);
+    renderSuggestions(items);
+    setStatus('','');
+  }catch(e){
+    setStatus('Error: '+e.message,'err');
+  }
+}
+
+function renderSuggestions(items){
+  const container=document.getElementById('suggestions');
+  container.innerHTML='';
+  items.forEach(item=>{
+    const card=document.createElement('div');
+    card.className='sug-card';
+    card.style.background=item.gradient;
+    card.innerHTML=`<div class="sug-label">${item.name}</div>`;
+    card.onclick=()=>applyGradient(item.gradient);
+    container.appendChild(card);
+  });
+}
+
+function applyGradient(gradValue){
+  // Parse and apply the gradient
+  const match=gradValue.match(/^(linear|radial|conic)-gradient\((.+)\)$/s);
+  if(!match)return;
+  const type=match[1];
+  setType(type);
+  // Extract stops manually is complex — just update preview directly
+  document.getElementById('preview').style.background=gradValue;
+  document.getElementById('codeText').textContent=`background: ${gradValue};`;
+}
+
+function setStatus(msg,cls){
+  const el=document.getElementById('aiStatus');
+  el.textContent=msg;
+  el.className='status'+(cls?' '+cls:'');
+  el.style.display=msg?'block':'none';
+}
+
+// Init
+addStop('#f857a4', 0);
+addStop('#ff5858', 100);
+updateGradient();
+loadKey();
+</script>
+</body>
+</html>
